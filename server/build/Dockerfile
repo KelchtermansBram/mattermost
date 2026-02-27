@@ -1,16 +1,29 @@
-# First stage - Ubuntu with document processing dependencies and curl for downloading
+# Stage 1: Build webapp from source so custom favicons (and all client assets) are included.
+# The pre-built tarball's favicons are in both images/favicon/ and hashed in files/; only a full build fixes both.
+FROM node:24-bookworm-slim AS webapp-build
+WORKDIR /webapp
+COPY webapp/package.json webapp/package-lock.json ./
+COPY webapp/channels/package.json channels/
+COPY webapp/platform/client/package.json platform/client/
+COPY webapp/platform/components/package.json platform/components/
+COPY webapp/platform/shared/package.json platform/shared/
+COPY webapp/platform/types/package.json platform/types/
+COPY webapp/platform/mattermost-redux/package.json platform/mattermost-redux/
+COPY webapp/platform/eslint-plugin/package.json platform/eslint-plugin/
+RUN mkdir -p platform/client platform/components platform/shared platform/types platform/mattermost-redux platform/eslint-plugin
+# Install deps (postinstall builds workspace packages required for the main build)
+RUN npm ci 2>/dev/null || npm install
+COPY webapp .
+RUN npm run build
+
+# Stage 2: Ubuntu with document processing dependencies and curl for downloading
 FROM ubuntu:noble-20251013@sha256:c35e29c9450151419d9448b0fd75374fec4fff364a27f176fb458d472dfc9e54 AS builder
-# Setting bash as our shell, and enabling pipefail option
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Build Arguments
 ARG PUID=2000
 ARG PGID=2000
-# MM_PACKAGE build arguments controls which version of mattermost to install, defaults to latest stable enterprise
-# e.g. https://releases.mattermost.com/9.7.1/mattermost-9.7.1-linux-amd64.tar.gz
 ARG MM_PACKAGE="https://latest.mattermost.com/mattermost-enterprise-linux"
 
-# Install needed packages and indirect dependencies
 RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
   ca-certificates \
@@ -24,20 +37,21 @@ RUN apt-get update \
   tzdata \
   && rm -rf /var/lib/apt/lists/*
 
-# Copy custom favicons from repo (overlay on package client assets later)
-# Build context must be repo root for this path to exist.
-COPY webapp/channels/src/images/favicon /tmp/custom-favicon
+# Download Mattermost server tarball and extract (tarball root may be "mattermost" or "mattermost-*-linux-amd64")
+RUN mkdir -p /tmp/mm \
+  && curl -L $MM_PACKAGE | tar -xzf - -C /tmp/mm \
+  && MM_ROOT="/tmp/mm/$(ls /tmp/mm | head -1)" \
+  && mv "$MM_ROOT" /mattermost
 
-# Set mattermost group/user and download Mattermost
-RUN mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins \
-  && groupadd --gid ${PGID} mattermost \
+# Create mattermost user and client/plugins
+RUN groupadd --gid ${PGID} mattermost \
   && useradd --uid ${PUID} --gid ${PGID} --comment "" --home-dir /mattermost mattermost \
-  && curl -L $MM_PACKAGE | tar -xvz \
-  && chown -R mattermost:mattermost /mattermost /mattermost/data /mattermost/plugins /mattermost/client/plugins
+  && mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins
 
-# Overlay custom favicons so the webapp uses your branding
-RUN cp -r /tmp/custom-favicon/. /mattermost/client/images/favicon/ \
-  && chown -R mattermost:mattermost /mattermost/client/images/favicon
+# Replace client with our built webapp (includes your custom favicons)
+RUN rm -rf /mattermost/client/*
+COPY --from=webapp-build /webapp/channels/dist/. /mattermost/client/
+RUN chown -R mattermost:mattermost /mattermost
 
 # Create PostgreSQL client SSL directory structure for ssl_mode=require
 RUN mkdir -p /mattermost/.postgresql \

@@ -1,15 +1,21 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React from 'react';
-import type {CSSProperties} from 'react';
-import {useIntl} from 'react-intl';
+import type { CSSProperties } from "react";
+import React from "react";
+import { useIntl } from "react-intl";
 
-export default function MattermostLogo(props: React.HTMLAttributes<HTMLSpanElement>) {
-    const {formatMessage} = useIntl();
+export default function MattermostLogo(
+    props: React.HTMLAttributes<HTMLSpanElement>,
+) {
+    const { formatMessage } = useIntl();
     return (
-        <span {...props}>
-            <svg
+        <div {...props}>
+            <img
+                src="https://comedykit.be/favicon-128x128.png"
+                alt="ComedyKit Logo"
+            />
+            {/* <svg
                 version='1.1'
                 x='0px'
                 y='0px'
@@ -30,12 +36,12 @@ export default function MattermostLogo(props: React.HTMLAttributes<HTMLSpanEleme
                         d='M335.6,204.3l-1.8-74.2l-1.5-42.7l-1-37c0,0,0.2-17.8-0.4-22c-0.1-0.9-0.4-1.6-0.7-2.2 c0-0.1-0.1-0.2-0.1-0.3c0-0.1-0.1-0.2-0.1-0.2c-0.7-1.2-1.8-2.1-3.1-2.6c-1.4-0.5-2.9-0.4-4.2,0.2c0,0-0.1,0-0.1,0 c-0.2,0.1-0.3,0.1-0.4,0.2c-0.6,0.3-1.2,0.7-1.8,1.3c-3,3-13.7,17.2-13.7,17.2l-23.2,28.8l-27.1,33l-46.5,57.8 c0,0-21.3,26.6-16.6,59.4s29.1,48.7,48,55.1c18.9,6.4,48,8.5,71.6-14.7C336.4,238.4,335.6,204.3,335.6,204.3z'
                     />
                 </g>
-            </svg>
-        </span>
+            </svg> */}
+        </div>
     );
 }
 
 const style: CSSProperties = {
-    fillRule: 'evenodd',
-    clipRule: 'evenodd',
+    fillRule: "evenodd",
+    clipRule: "evenodd",
 };

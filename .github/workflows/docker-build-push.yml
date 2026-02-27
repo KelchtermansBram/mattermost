@@ -14,7 +14,7 @@ on:
 
 env:
   # Set to your Docker Hub repository (e.g. myuser/mattermost-server)
-  DOCKER_IMAGE: mattermost/mattermost-server
+  DOCKER_IMAGE: bramkel/mattermost-server
 
 jobs:
   build-and-push:

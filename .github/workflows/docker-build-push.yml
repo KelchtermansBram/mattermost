@@ -4,14 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - server/build/Dockerfile
-      - server/build/passwd
-      - webapp/channels/src/images/favicon/**
-      - .github/workflows/docker-build-push.yml
-  release:
-    types: [published]
-  workflow_dispatch:
 
 env:
   # Set to your Docker Hub repository (e.g. myuser/mattermost-server)

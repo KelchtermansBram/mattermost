@@ -27,13 +27,17 @@ import type {PropsFromRedux} from './index';
 
 import './user_account_menu.scss';
 
-type Props = PropsFromRedux;
+type Props = PropsFromRedux & {
+    /** When true, only the avatar with status badge is shown (no menu, not interactive) */
+    disabled?: boolean;
+};
 
 export const ELEMENT_ID_FOR_USER_ACCOUNT_MENU_BUTTON = 'userAccountMenuButton';
 export const ELEMENT_ID_FOR_USER_ACCOUNT_MENU = 'userAccountMenu';
 
 export default function UserAccountMenu(props: Props) {
     const {formatMessage} = useIntl();
+    const {disabled: menuDisabled} = props;
 
     function openCustomStatusModal(event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) {
         event.stopPropagation();
@@ -45,6 +49,22 @@ export default function UserAccountMenu(props: Props) {
 
     const isCustomStatusSet = !props.isCustomStatusExpired && props.customStatus && (props.customStatus.text?.length > 0 || props.customStatus.emoji?.length > 0);
     const shouldConfirmBeforeStatusChange = props.autoResetPref === '' && props.status === UserStatuses.OUT_OF_OFFICE;
+
+    if (menuDisabled) {
+        return (
+            <div
+                className={classNames('userAccountMenu_menuButton', 'userAccountMenu_avatarOnly')}
+                style={{pointerEvents: 'none', cursor: 'default'}}
+                aria-hidden={true}
+            >
+                <UserAccountMenuButton
+                    profilePicture={props.profilePicture}
+                    status={props.status}
+                    avatarOnly={true}
+                />
+            </div>
+        );
+    }
 
     return (
         <Menu.Container

@@ -7,6 +7,7 @@ on:
     paths:
       - server/build/Dockerfile
       - server/build/passwd
+      - webapp/channels/src/images/favicon/**
       - .github/workflows/docker-build-push.yml
   release:
     types: [published]
@@ -46,7 +47,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@1dc73863535b631f98b2378be8619f83b136f4a0 # v6.17.0
         with:
-          context: server/build
+          context: .
           file: server/build/Dockerfile
           push: true
           tags: |

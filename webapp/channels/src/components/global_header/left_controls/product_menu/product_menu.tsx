@@ -17,16 +17,12 @@ import {
     TaskNameMapToSteps,
     useHandleOnBoardingTaskData,
 } from "components/onboarding_tasks";
-import Menu from "components/widgets/menu/menu";
-import MenuWrapper from "components/widgets/menu/menu_wrapper";
 
 import { LicenseSkus } from "utils/constants";
-import { isChannels, useCurrentProductId, useProducts } from "utils/products";
+import { useCurrentProductId, useProducts } from "utils/products";
 
-import ProductBranding from "./product_branding";
 import ProductBrandingFreeEdition from "./product_branding_team_edition";
 import ProductMenuItem from "./product_menu_item";
-import ProductMenuList from "./product_menu_list";
 
 import { useClickOutsideRef } from "../../hooks";
 
@@ -118,38 +114,13 @@ const ProductMenu = (): JSX.Element => {
 
     return (
         <div ref={menuRef}>
-            <MenuWrapper open={switcherOpen}>
-                <ProductMenuContainer onClick={handleClick}>
-                    {isFreeEdition ? (
-                        <ProductBrandingFreeEdition />
-                    ) : (
-                        <ProductBranding />
-                    )}
-                </ProductMenuContainer>
-                <Menu
-                    listId={"product-switcher-menu-dropdown"}
-                    className={"product-switcher-menu"}
-                    id={"product-switcher-menu"}
-                    ariaLabel={"switcherOpen"}
-                >
-                    <ProductMenuItem
-                        destination={"/"}
-                        icon={"product-channels"}
-                        text={"Channels"}
-                        active={isChannels(currentProductID)}
-                        onClick={handleClick}
-                    />
-                    {productItems}
-                    <ProductMenuList
-                        isMessaging={isChannels(currentProductID)}
-                        onClick={handleClick}
-                        handleVisitConsoleClick={handleVisitConsoleClick}
-                    />
-                    <Menu.Group>
-                        <Menu.StartTrial id="startTrial" />
-                    </Menu.Group>
-                </Menu>
-            </MenuWrapper>
+            <a
+                href="https://comedykit.be"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <ProductBrandingFreeEdition />
+            </a>
         </div>
     );
 };

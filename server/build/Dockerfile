@@ -24,12 +24,20 @@ RUN apt-get update \
   tzdata \
   && rm -rf /var/lib/apt/lists/*
 
+# Copy custom favicons from repo (overlay on package client assets later)
+# Build context must be repo root for this path to exist.
+COPY webapp/channels/src/images/favicon /tmp/custom-favicon
+
 # Set mattermost group/user and download Mattermost
 RUN mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins \
   && groupadd --gid ${PGID} mattermost \
   && useradd --uid ${PUID} --gid ${PGID} --comment "" --home-dir /mattermost mattermost \
   && curl -L $MM_PACKAGE | tar -xvz \
   && chown -R mattermost:mattermost /mattermost /mattermost/data /mattermost/plugins /mattermost/client/plugins
+
+# Overlay custom favicons so the webapp uses your branding
+RUN cp -r /tmp/custom-favicon/. /mattermost/client/images/favicon/ \
+  && chown -R mattermost:mattermost /mattermost/client/images/favicon
 
 # Create PostgreSQL client SSL directory structure for ssl_mode=require
 RUN mkdir -p /mattermost/.postgresql \
@@ -68,8 +76,8 @@ COPY --from=builder /usr/lib/libfontconfig.so* /usr/lib/
 # Copy mattermost from builder stage
 COPY --from=builder --chown=2000:2000 /mattermost /mattermost
 
-# Copy passwd including mattermost user
-COPY  passwd /etc/passwd
+# Copy passwd including mattermost user (path relative to repo root context)
+COPY server/build/passwd /etc/passwd
 
 # We should refrain from running as privileged user
 USER mattermost

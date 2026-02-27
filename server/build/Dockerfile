@@ -2,18 +2,10 @@
 # The pre-built tarball's favicons are in both images/favicon/ and hashed in files/; only a full build fixes both.
 FROM node:24-bookworm-slim AS webapp-build
 WORKDIR /webapp
-COPY webapp/package.json webapp/package-lock.json ./
-COPY webapp/channels/package.json channels/
-COPY webapp/platform/client/package.json platform/client/
-COPY webapp/platform/components/package.json platform/components/
-COPY webapp/platform/shared/package.json platform/shared/
-COPY webapp/platform/types/package.json platform/types/
-COPY webapp/platform/mattermost-redux/package.json platform/mattermost-redux/
-COPY webapp/platform/eslint-plugin/package.json platform/eslint-plugin/
-RUN mkdir -p platform/client platform/components platform/shared platform/types platform/mattermost-redux platform/eslint-plugin
-# Install deps (postinstall builds workspace packages required for the main build)
-RUN npm ci 2>/dev/null || npm install
+# Copy full webapp first (postinstall needs workspace source: tsconfig, rollup.config, etc.)
 COPY webapp .
+# Install deps; postinstall will build platform/types, client, components, shared
+RUN npm ci 2>/dev/null || npm install
 RUN npm run build
 
 # Stage 2: Ubuntu with document processing dependencies and curl for downloading

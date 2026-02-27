@@ -83,7 +83,7 @@ const RightControls = ({productId = null}: Props): JSX.Element => {
                         </>
                     ) : null
                 }
-                <UserAccountMenu/>
+                <UserAccountMenu disabled={true}/>
             </StyledCustomizeYourExperienceTour>
         </RightControlsContainer>
     );

@@ -116,6 +116,23 @@
         }
     }
 
+    &.userAccountMenu_avatarOnly {
+        cursor: default;
+
+        &:hover,
+        &:focus {
+            background: transparent;
+
+            .userStatusIconWrapper {
+                background-image: none;
+            }
+        }
+
+        .userStatusIconWrapper:hover {
+            cursor: default;
+        }
+    }
+
     &.withCustomStatus {
         background: rgba(var(--global-header-text-rgb), 0.16);
 

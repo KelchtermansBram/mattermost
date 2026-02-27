@@ -14,14 +14,17 @@ import {UserStatuses} from 'utils/constants';
 
 interface Props {
     profilePicture?: string;
-    openCustomStatusModal: ((event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void);
+    openCustomStatusModal?: (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => void;
     status?: string;
+    /** When true, only avatar and status badge are shown (no custom status emoji, not interactive) */
+    avatarOnly?: boolean;
 }
 
 export default function UserAccountMenuButton({
     profilePicture,
     openCustomStatusModal,
     status,
+    avatarOnly = false,
 }: Props) {
     const {formatMessage} = useIntl();
 
@@ -64,12 +67,14 @@ export default function UserAccountMenuButton({
 
     return (
         <>
-            <CustomStatusEmoji
-                showTooltip={true}
-                emojiStyle={{marginRight: '6px'}}
-                aria-hidden={true}
-                onClick={openCustomStatusModal}
-            />
+            {!avatarOnly && (
+                <CustomStatusEmoji
+                    showTooltip={true}
+                    emojiStyle={{marginRight: '6px'}}
+                    aria-hidden={true}
+                    onClick={openCustomStatusModal ?? (() => {})}
+                />
+            )}
             <Avatar
                 size='sm'
                 url={profilePicture}
@@ -81,12 +86,14 @@ export default function UserAccountMenuButton({
             >
                 {statusIcon}
             </div>
-            <p
-                id='userAccountMenuButtonDescribedBy'
-                className='sr-only'
-            >
-                {formatMessage(getMenuButtonAriaDescription(status))}
-            </p>
+            {!avatarOnly && (
+                <p
+                    id='userAccountMenuButtonDescribedBy'
+                    className='sr-only'
+                >
+                    {formatMessage(getMenuButtonAriaDescription(status))}
+                </p>
+            )}
         </>
     );
 }

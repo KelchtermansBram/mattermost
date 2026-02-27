@@ -18,18 +18,13 @@ import {
     TaskNameMapToSteps,
     useHandleOnBoardingTaskData,
 } from 'components/onboarding_tasks';
-import Menu from 'components/widgets/menu/menu';
-import MenuWrapper from 'components/widgets/menu/menu_wrapper';
 
-import { getProductSwitcherLinkURL, isChannels, useCurrentProductId, useProducts } from 'utils/products';
+import { getProductSwitcherLinkURL, useCurrentProductId, useProducts } from 'utils/products';
 
 import type { GlobalState } from 'types/store';
 
-import ProductBranding from './product_branding';
 import ProductBrandingFreeEdition from './product_branding_team_edition';
 import ProductMenuItem from './product_menu_item';
-import ProductMenuList from './product_menu_list';
-import ProductSwitcherMenuItem from './product_switcher_menu_item';
 
 import { useClickOutsideRef } from '../../hooks';
 
@@ -144,53 +139,13 @@ const ProductMenu = (): JSX.Element => {
 
     return (
         <div ref={menuRef}>
-            <MenuWrapper
-                open={switcherOpen}
+            <a
+                href='https://comedykit.be'
+                target='_blank'
+                rel='noopener noreferrer'
             >
-                <ProductMenuContainer onClick={handleClick}>
-                    {isFreeEdition ? (
-                        <ProductBrandingFreeEdition/>
-                    ) : (
-                        <ProductBranding/>
-                    )}
-                </ProductMenuContainer>
-                <Menu
-                    listId={'product-switcher-menu-dropdown'}
-                    className={'product-switcher-menu'}
-                    id={'product-switcher-menu'}
-                    ariaLabel={'switcherOpen'}
-                >
-                    <ProductMenuItem
-                        destination={'/'}
-                        icon={'product-channels'}
-                        text={'Channels'}
-                        active={isChannels(currentProductID)}
-                        onClick={handleClick}
-                    />
-                    {productItems}
-                    {visibleSwitcherItems.length > 0 && (
-                        <Menu.Group>
-                            {visibleSwitcherItems.map((item) => (
-                                <ProductSwitcherMenuItem
-                                    key={item.id}
-                                    item={item}
-                                    onClose={handleClick}
-                                />
-                            ))}
-                        </Menu.Group>
-                    )}
-                    <ProductMenuList
-                        isMessaging={isChannels(currentProductID)}
-                        onClick={handleClick}
-                        handleVisitConsoleClick={handleVisitConsoleClick}
-                    />
-                    <Menu.Group>
-                        <Menu.StartTrial
-                            id='startTrial'
-                        />
-                    </Menu.Group>
-                </Menu>
-            </MenuWrapper>
+                <ProductBrandingFreeEdition/>
+            </a>
         </div>
     );
 };

@@ -1,7 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type { CSSProperties } from "react";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -10,38 +9,26 @@ export default function MattermostLogo(
 ) {
     const { formatMessage } = useIntl();
     return (
-        <div {...props}>
-            <img
-                src="https://comedykit.be/favicon-128x128.png"
-                alt="ComedyKit Logo"
-            />
-            {/* <svg
-                version='1.1'
-                x='0px'
-                y='0px'
-                viewBox='0 0 500 500'
-                enableBackground='new 0 0 500 500'
-                role='img'
+        <span {...props}>
+            <svg
+                version="1.0"
+                xmlns="http://www.w3.org/2000/svg"
+                width="192"
+                height="192"
+                viewBox="0 0 192 192"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
                 aria-label={formatMessage({id: 'generic_icons.mattermost', defaultMessage: 'Mattermost Logo'})}
+                style={{color: 'inherit'}}
             >
-                <g>
-                    <g>
-                        <path
-                            style={style}
-                            d='M396.9,47.7l2.6,53.1c43,47.5,60,114.8,38.6,178.1c-32,94.4-137.4,144.1-235.4,110.9 S51.1,253.1,83,158.7C104.5,95.2,159.2,52,222.5,40.5l34.2-40.4C150-2.8,49.3,63.4,13.3,169.9C-31,300.6,39.1,442.5,169.9,486.7 s272.6-25.8,316.9-156.6C522.7,223.9,483.1,110.3,396.9,47.7z'
-                        />
-                    </g>
-                    <path
-                        style={style}
-                        d='M335.6,204.3l-1.8-74.2l-1.5-42.7l-1-37c0,0,0.2-17.8-0.4-22c-0.1-0.9-0.4-1.6-0.7-2.2 c0-0.1-0.1-0.2-0.1-0.3c0-0.1-0.1-0.2-0.1-0.2c-0.7-1.2-1.8-2.1-3.1-2.6c-1.4-0.5-2.9-0.4-4.2,0.2c0,0-0.1,0-0.1,0 c-0.2,0.1-0.3,0.1-0.4,0.2c-0.6,0.3-1.2,0.7-1.8,1.3c-3,3-13.7,17.2-13.7,17.2l-23.2,28.8l-27.1,33l-46.5,57.8 c0,0-21.3,26.6-16.6,59.4s29.1,48.7,48,55.1c18.9,6.4,48,8.5,71.6-14.7C336.4,238.4,335.6,204.3,335.6,204.3z'
-                    />
+                <g
+                    transform="translate(0,192) scale(0.1,-0.1)"
+                    fill="currentColor"
+                    stroke="none"
+                >
+                    <path d="M830 1910 c-201 -28 -399 -128 -546 -274 -373 -374 -375 -986 -5 -1357 136 -136 341 -241 516 -264 28 -3 62 -9 78 -11 l27 -6 0 271 c0 174 -4 271 -10 271 -5 0 -19 9 -30 20 -16 16 -20 33 -20 86 0 49 -3 65 -12 61 -7 -2 -85 -43 -172 -90 l-159 -86 -50 71 c-27 38 -45 73 -40 78 4 4 127 114 273 245 146 131 272 245 281 252 15 13 27 0 113 -127 53 -78 96 -144 96 -148 0 -4 -20 -18 -45 -31 l-45 -24 0 -133 c0 -121 -2 -136 -20 -154 -11 -11 -24 -20 -30 -20 -6 0 -10 -97 -10 -270 l0 -270 48 6 c227 28 432 132 588 297 362 384 348 969 -33 1338 -135 131 -294 219 -463 255 -86 18 -249 25 -330 14z m555 -499 c152 -70 181 -266 57 -394 -35 -36 -121 -77 -162 -77 -13 0 -51 46 -124 154 -58 85 -106 161 -106 169 0 18 46 87 73 110 68 57 184 74 262 38z" />
                 </g>
-            </svg> */}
-        </div>
+            </svg>
+        </span>
     );
 }
-
-const style: CSSProperties = {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-};

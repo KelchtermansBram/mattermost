@@ -1,10 +1,11 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useIntl } from "react-intl";
 
 const COMEDYKIT_BASE_URL = "https://comedykit.be/users";
+const COMEDYKIT_API_URL = "https://api.comedykit.be/users";
 
 type Props = {
     email?: string;
@@ -52,12 +53,33 @@ const ProfilePopoverEmail = ({
     isBot,
     username,
 }: Props) => {
+    const [userExistsOnComedyKit, setUserExistsOnComedyKit] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        if (!username) {
+            setUserExistsOnComedyKit(null);
+            return;
+        }
+        const controller = new AbortController();
+        setUserExistsOnComedyKit(null);
+        fetch(`${COMEDYKIT_API_URL}/${username}`, {signal: controller.signal})
+            .then((res) => {
+                setUserExistsOnComedyKit(res.ok);
+            })
+            .catch((err) => {
+                if (err.name !== "AbortError") {
+                    setUserExistsOnComedyKit(false);
+                }
+            });
+        return () => controller.abort();
+    }, [username]);
+
     if (isBot || haveOverrideProp) {
         return null;
     }
 
-    // ComedyKit override: show link to ComedyKit profile when username is available
-    if (username) {
+    // ComedyKit: show link only when user exists on ComedyKit (API did not return 404)
+    if (username && userExistsOnComedyKit === true) {
         const comedyKitUrl = `${COMEDYKIT_BASE_URL}/${username}`;
         return (
             <div
@@ -78,7 +100,7 @@ const ProfilePopoverEmail = ({
         );
     }
 
-    // Default: email link (only when no ComedyKit username)
+    // Default: email link (when no ComedyKit username or user not found on ComedyKit)
     if (!email) {
         return null;
     }

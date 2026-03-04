@@ -187,6 +187,7 @@ const ProfilePopover = ({
                     email={Utils.getEmail(user)}
                     haveOverrideProp={haveOverrideProp}
                     isBot={user.is_bot}
+                    username={user.username}
                 />
                 {pluginItemsVisible && (
                     <div className='user-profile-popover-pluggables'>

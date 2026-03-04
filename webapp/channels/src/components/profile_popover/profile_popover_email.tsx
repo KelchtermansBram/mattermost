@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 const COMEDYKIT_BASE_URL = "https://comedykit.be/users";
@@ -53,7 +53,9 @@ const ProfilePopoverEmail = ({
     isBot,
     username,
 }: Props) => {
-    const [userExistsOnComedyKit, setUserExistsOnComedyKit] = useState<boolean | null>(null);
+    const [userExistsOnComedyKit, setUserExistsOnComedyKit] = useState<
+        boolean | null
+    >(null);
 
     useEffect(() => {
         if (!username) {
@@ -62,7 +64,7 @@ const ProfilePopoverEmail = ({
         }
         const controller = new AbortController();
         setUserExistsOnComedyKit(null);
-        fetch(`${COMEDYKIT_API_URL}/${username}`, {signal: controller.signal})
+        fetch(`${COMEDYKIT_API_URL}/${username}`, { signal: controller.signal })
             .then((res) => {
                 setUserExistsOnComedyKit(res.ok);
             })
@@ -98,26 +100,8 @@ const ProfilePopoverEmail = ({
                 </a>
             </div>
         );
-    }
-
-    // Default: email link (when no ComedyKit username or user not found on ComedyKit)
-    if (!email) {
+    } else {
         return null;
     }
-
-    function handleEmailClick(e: React.MouseEvent<HTMLAnchorElement>) {
-        e.preventDefault();
-        window.open(`mailto:${email}`);
-    }
-
-    return (
-        <div title={email} className="user-profile-popover__email">
-            <i className="icon icon-email-outline" aria-hidden="true" />
-            <a href={`mailto:${email}`} onClick={handleEmailClick}>
-                {email}
-            </a>
-        </div>
-    );
 };
-
 export default ProfilePopoverEmail;

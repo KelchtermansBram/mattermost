@@ -140,8 +140,7 @@ const AdminConsole = (props: Props) => {
             roles.system_user_manager &&
             roles.system_read_only_admin &&
             roles.system_custom_group_admin &&
-            roles.system_manager &&
-            roles.system_shared_channel_manager
+            roles.system_manager
         );
     };
 
@@ -269,6 +268,7 @@ const AdminConsole = (props: Props) => {
 
     console.log("props.roles", props.roles);
     console.log("config", config);
+    console.log("mainRolesLoaded", mainRolesLoaded(props.roles));
     if (!mainRolesLoaded(props.roles)) {
         return null;
     }

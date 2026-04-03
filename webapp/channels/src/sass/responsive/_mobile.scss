@@ -3,6 +3,12 @@
 @use "utils/variables";
 
 @media screen and (max-width: 768px) {
+    .announcement-bar {
+        display: none;
+    }
+    #root {
+        padding-top: env(safe-area-inset-top, 0px);
+    }
     #navbar_wrapper {
         .navbar-default {
             .navbar-brand {
@@ -160,7 +166,7 @@
                                 padding: 0 40px;
                                 text-align: center;
 
-                                >span {
+                                > span {
                                     display: block;
                                     overflow: hidden;
                                     font-family: Metropolis, sans-serif;
@@ -195,7 +201,7 @@
                         &-pills__tab {
                             height: 48px;
 
-                            >a {
+                            > a {
                                 font-size: 1.1em;
                                 line-height: 2.7;
 
@@ -318,7 +324,7 @@
                     width: 100%;
                     height: 100%;
                     background: functions.alpha-color(variables.$black, 0.3);
-                    content: '';
+                    content: "";
                 }
 
                 .MenuItem {
@@ -472,8 +478,8 @@
                 }
 
                 .MenuItem {
-                    >button,
-                    >a {
+                    > button,
+                    > a {
                         width: 100%;
                         height: auto;
                         padding: 3px 16px;
@@ -511,21 +517,25 @@
     .post__header,
     .GlobalThreads {
         .dropdown-menu {
-            >li {
-                >div {
-                    border-top-color: rgba(var(--center-channel-color-rgb), 0.08) !important;
+            > li {
+                > div {
+                    border-top-color: rgba(
+                        var(--center-channel-color-rgb),
+                        0.08
+                    ) !important;
 
                     .SubMenu__icon {
                         padding: 0 5px 0 8px !important;
                     }
                 }
 
-                >div,
-                >button {
+                > div,
+                > button {
                     height: auto;
                     padding: 15px 20px;
                     border-radius: 0;
-                    border-top: 1px solid rgba(var(--center-channel-color-rgb), 0.12);
+                    border-top: 1px solid
+                        rgba(var(--center-channel-color-rgb), 0.12);
                 }
 
                 &:first-child {
@@ -567,7 +577,8 @@
         border: none;
     }
 
-    .multi-select__container, .multi-select__error {
+    .multi-select__container,
+    .multi-select__error {
         .btn {
             display: block;
             min-width: 50px;
@@ -641,7 +652,7 @@
         .prompt__heading {
             display: block;
 
-            >div {
+            > div {
                 &:first-child {
                     display: block;
                     margin: 0 0 1em;
@@ -677,7 +688,7 @@
     .compliance-panel,
     .audit-panel {
         .row {
-            >.form-group {
+            > .form-group {
                 padding-left: 15px;
             }
         }
@@ -761,7 +772,7 @@
 
             &::after {
                 top: -3px;
-                content: '...';
+                content: "...";
                 font-size: 20px;
             }
         }
@@ -856,7 +867,7 @@
                 top: -6px;
                 min-width: 45px;
 
-                >div {
+                > div {
                     width: auto;
                 }
 
@@ -1103,7 +1114,7 @@
         .navbar-nav {
             margin-top: 0;
 
-            >li {
+            > li {
                 float: left;
             }
 
@@ -1119,7 +1130,7 @@
     body {
         &.white {
             .inner-wrap {
-                >.row.content {
+                > .row.content {
                     margin-bottom: -185px;
                 }
             }
@@ -1257,7 +1268,7 @@
                     margin: 1.5em 0 1em;
                 }
 
-                >a {
+                > a {
                     margin: 0;
                     font-size: 15px;
                     line-height: 2.5;
@@ -1277,7 +1288,7 @@
         transform: translate3d(-290px, 0, 0);
         transition: transform 0.35s ease;
 
-        +.inner-wrap #app-content {
+        + .inner-wrap #app-content {
             margin-left: 0;
         }
 
@@ -1367,7 +1378,7 @@
                     margin: 1.5em 0 1em;
                 }
 
-                >a {
+                > a {
                     margin: 0;
                     font-size: 15px;
                     line-height: 2.5;
@@ -1484,8 +1495,10 @@
                 height: 100%;
                 //Some trickery in order for the z-index transition to happen immediately on move-in and delayed on move-out.
                 background-color: transparent;
-                content: '';
-                transition: background-color 0.35s ease, z-index 0s ease 0.35s;
+                content: "";
+                transition:
+                    background-color 0.35s ease,
+                    z-index 0s ease 0.35s;
             }
         }
 
@@ -1599,7 +1612,7 @@
     .multi-select__help {
         flex-direction: column;
 
-        >span {
+        > span {
             &:first-child {
                 margin-bottom: 1rem;
             }
@@ -1619,7 +1632,10 @@
     .app__body {
         &.announcement-bar--fixed {
             .modal {
-                padding-top: calc(var(--announcement-bar-count, 1) * #{variables.$announcement-bar-height});
+                padding-top: calc(
+                    var(--announcement-bar-count, 1) *
+                        #{variables.$announcement-bar-height}
+                );
             }
         }
 
@@ -1708,10 +1724,10 @@
 
         .post {
             .open {
-                >.dropdown-menu__content {
+                > .dropdown-menu__content {
                     display: table;
 
-                    >.dropdown-menu {
+                    > .dropdown-menu {
                         display: table-cell;
                     }
                 }
@@ -1720,7 +1736,7 @@
     }
 
     .access-history__table {
-        >div {
+        > div {
             display: block;
         }
 
@@ -1736,7 +1752,7 @@
     }
 
     .activity-log__table {
-        >div {
+        > div {
             display: block;
         }
 
@@ -1820,7 +1836,7 @@
     .nav-tabs {
         margin-top: 1em;
 
-        >li {
+        > li {
             margin-right: 0;
 
             a {
@@ -1878,7 +1894,8 @@
             }
         }
 
-        #browseChannelsModal.modal .GenericModal, #userGroupsModal.modal .GenericModal {
+        #browseChannelsModal.modal .GenericModal,
+        #userGroupsModal.modal .GenericModal {
             .GenericModal__wrapper {
                 display: flex;
                 max-height: 100vh;
@@ -2013,7 +2030,7 @@
         }
 
         .Select-input {
-            >input {
+            > input {
                 padding: 8px 0;
             }
         }

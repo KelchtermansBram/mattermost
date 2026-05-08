@@ -1,25 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>
-        (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token');
-
-            if (!token) {
-                return;
-            }
-
-            // Set cookie in the current WebView/browser context (same domain).
-            document.cookie = `MMAUTHTOKEN=${encodeURIComponent(token)}; path=/; secure; samesite=none`;
-
-            // Clean URL (remove token param) to avoid reuse on reload/back/forward.
-            window.history.replaceState({}, document.title, window.location.pathname);
-
-            // Reload so Mattermost picks up the cookie.
-            window.location.reload();
-        })();
-    </script>
     <meta charset="utf-8">
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>

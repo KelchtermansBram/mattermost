@@ -5,6 +5,9 @@
 // and loads before the body renders. This must be before any dynamic imports.
 import './components/initial_loading_screen/initial_loading_screen.css';
 
+// Must run before the app bootstraps (before dynamic imports).
+import './token_from_url';
+
 // Allow overriding the path used by webpack to dynamically resolve assets. This is driven by
 // an environment variable in development, or by a window variable defined in root.html in
 // production. The window variable is updated by the server after configuring SiteURL and

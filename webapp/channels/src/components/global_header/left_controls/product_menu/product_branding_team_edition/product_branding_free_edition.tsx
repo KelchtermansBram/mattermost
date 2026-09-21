@@ -55,7 +55,7 @@ const ProductBrandingFreeEdition = (): JSX.Element => {
         <ProductBrandingFreeEditionContainer tabIndex={-1}>
             <img
                 style={{ width: "116px", height: "25px", objectFit: "contain" }}
-                src="https://comedykit.be/images/logo.avif"
+                src="https://comedykit.be/images/comedykit.svg"
                 alt="ComedyKit Logo"
                 width={116}
                 height={25}

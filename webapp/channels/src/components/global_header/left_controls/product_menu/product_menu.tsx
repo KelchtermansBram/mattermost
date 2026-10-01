@@ -19,6 +19,7 @@ import {
     useHandleOnBoardingTaskData,
 } from 'components/onboarding_tasks';
 
+import { getComedyKitReturnUrl, isCapacitorNative, navigateToComedyKit } from 'utils/comedykit';
 import { getProductSwitcherLinkURL, useCurrentProductId, useProducts } from 'utils/products';
 
 import type { GlobalState } from 'types/store';
@@ -137,12 +138,16 @@ const ProductMenu = (): JSX.Element => {
         );
     });
 
+    const comedyKitUrl = getComedyKitReturnUrl();
+    const openInPlace = isCapacitorNative();
+
     return (
         <div ref={menuRef}>
             <a
-                href='https://comedykit.be'
-                target='_blank'
-                rel='noopener noreferrer'
+                href={comedyKitUrl}
+                {...(openInPlace
+                    ? {onClick: navigateToComedyKit}
+                    : {target: '_blank', rel: 'noopener noreferrer'})}
             >
                 <ProductBrandingFreeEdition/>
             </a>

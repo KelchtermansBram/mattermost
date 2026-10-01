@@ -9,6 +9,7 @@ import DataPrefetch from "components/data_prefetch";
 import ResizableLhs from "components/resizable_sidebar/resizable_lhs";
 
 import Pluggable from "plugins/pluggable";
+import { getComedyKitReturnUrl, navigateToComedyKit } from "utils/comedykit";
 import Constants, { ModalIdentifiers, RHSStates } from "utils/constants";
 import { cmdOrCtrlPressed, isKeyPressed } from "utils/keyboard";
 import { localizeMessage } from "utils/utils";
@@ -270,9 +271,8 @@ export default class Sidebar extends React.PureComponent<Props, State> {
                 {this.props.isMobileView && (
                     <a
                         className="SidebarComedyKitLogo"
-                        href="https://comedykit.be"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={getComedyKitReturnUrl()}
+                        onClick={navigateToComedyKit}
                     >
                         <img
                             src="https://comedykit.be/images/comedykit.svg"

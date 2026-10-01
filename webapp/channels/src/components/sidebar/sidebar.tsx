@@ -20,10 +20,6 @@ import ChannelNavigator from './channel_navigator';
 import SidebarJoinRequestCountsSync from './sidebar_join_request_counts_sync';
 import SidebarList from './sidebar_list';
 
-const MobileSidebarHeader = makeAsyncComponent(
-    "MobileSidebarHeader",
-    lazy(() => import("./mobile_sidebar_header")),
-);
 const MoreDirectChannels = makeAsyncComponent(
     "MoreDirectChannels",
     lazy(() => import("components/more_direct_channels")),
@@ -271,12 +267,27 @@ export default class Sidebar extends React.PureComponent<Props, State> {
                     dragging: this.state.isDragging,
                 })}
             >
+                {this.props.isMobileView && (
+                    <a
+                        className="SidebarComedyKitLogo"
+                        href="https://comedykit.be"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src="https://comedykit.be/images/comedykit.svg"
+                            alt="ComedyKit Logo"
+                            width={116}
+                            height={25}
+                        />
+                    </a>
+                )}
                 <div
                     id="lhsNavigator"
                     role="application"
                     aria-label={ariaLabel}
                     className="a11y__region"
-                    style={{ paddingTop: "2rem" }}
+                    style={{ paddingTop: this.props.isMobileView ? undefined : "2rem" }}
                     data-a11y-sort-order="6"
                 >
                     <ChannelNavigator />
